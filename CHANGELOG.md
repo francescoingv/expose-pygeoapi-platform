@@ -9,4 +9,9 @@ Metadata updates
 ## [1.0.2] - 2026-03-09
 Fixed version 
 
+## [1.0.3] - 2026-03-09
+Sync with Zenodo
+
+## [1.0.4] - 2026-03-09
+Bugs in metadata format
 
