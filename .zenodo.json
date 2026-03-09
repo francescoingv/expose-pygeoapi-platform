@@ -1,7 +1,9 @@
 {
   "title": "INGV pygeoapi processing platform",
   "upload_type": "software",
-  "description": "Software platform integrating pygeoapi process plugins and an external execution service to expose and run scientific processing codes via OGC API - Processes.",
+  "description": "Software platform integrating pygeoapi process plugins and a generic "
+                 "processor provider (execution service) to expose and run scientific "
+                 "command-line processing codes via the OGC API - Processes standard.",
   "creators": [
     {
       "name": "Martinelli, Francesco",
@@ -10,6 +12,8 @@
   ],
   "license": "MIT",
   "version": "1.0.0",
+  "access_right": "open",
+  "language": "eng",
   "keywords": [
     "pygeoapi",
     "OGC API - Processes",
@@ -19,15 +23,23 @@
   ],
   "related_identifiers": [
     {
-      "relation": "isSupplementTo",
+      "_comment": "pygeoapi process plugins"
+      "relation": "hasPart",
       "identifier": "10.5281/zenodo.18892819",
       "scheme": "doi"
     },
     {
-      "relation": "isSupplementTo",
+      "_comment": "generic processor provider",
+      "relation": "hasPart",
       "identifier": "10.5281/zenodo.18892842",
       "scheme": "doi"
-    }
+    },
+    {
+      "_comment": "pybox",
+      "relation": "references",
+      "identifier": "10.5281/zenodo.18920969",
+      "scheme": "doi"
+    }    
   ]
 }
 

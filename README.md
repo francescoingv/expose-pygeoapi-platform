@@ -1,39 +1,68 @@
-
 # INGV pygeoapi processing platform
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18892848.svg)](https://doi.org/10.5281/zenodo.18892848)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Python](https://img.shields.io/badge/python-3.x-blue.svg)
 
-This repository describes the **INGV pygeoapi processing platform**, a
-software architecture designed to expose and execute scientific
-processing services through APIs compliant with the **OGC API - Processes**
-standard.
+Platform for exposing command‑line scientific programs as
+**OGC API - Processes** web services using **pygeoapi** and a
+remote execution architecture.
 
-The platform integrates **pygeoapi**, custom process plugins, and an
-external execution service that runs scientific codes in an isolated
-environment.
-
----
+------------------------------------------------------------------------
 
 ## Overview
 
-The platform enables the publication of scientific processing services
-through standard web APIs.
+The **INGV pygeoapi processing platform** is a software architecture
+designed to expose command‑line scientific programs as web services
+compliant with the **OGC API - Processes** standard.
 
-In this architecture:
+Many scientific applications are distributed as command-line programs
+that require specific runtime environments, dependencies, or operating
+systems. Running these programs within a single web service environment
+is often difficult due to incompatible software stacks or resource
+isolation requirements.
 
-- **pygeoapi** exposes processes through APIs compliant with the
-  **OGC API - Processes** specification
-- **pygeoapi plugins** implement the processing endpoints
-- an **external execution service** runs the scientific codes
-- scientific codes are executed independently from the API layer
+This platform provides a solution that separates:
 
-This separation allows:
+1.  **API layer** -- exposes processes through the OGC API - Processes
+    standard
+2.  **Execution layer** -- runs scientific programs in isolated
+    environments
 
-- independent execution environments
-- flexible deployment of processing codes
-- better isolation of software dependencies
+The API layer is implemented using the **pygeoapi framework**, which
+provides an implementation of the OGC API suite and allows extension
+through plugins.
 
----
+Actual execution of the scientific programs is delegated to lightweight
+remote services called **generic processor providers**, which run the
+programs on dedicated machines and return results via HTTP.
+
+This architecture allows:
+
+-   isolation of execution environments
+-   independent deployment of processing codes
+-   reuse of a single API infrastructure for multiple programs
+-   a single entrypoint exposing all processing services
+
+------------------------------------------------------------------------
+
+## Design principles
+
+The platform design follows several principles:
+
+-   **Environment isolation** -- programs can run on different machines
+    with independent software environments.
+
+-   **Single API entry point** -- all processes are exposed through one
+    OGC API.
+
+-   **Minimal execution service** -- the execution service is
+    lightweight and flexible.
+
+-   **Decoupled architecture** -- API infrastructure and execution
+    environments are independent.
+
+------------------------------------------------------------------------
 
 ## Platform architecture
 
@@ -46,109 +75,124 @@ the **OGC API - Processes** standard.
 
 https://pygeoapi.io/
 
----
+------------------------------------------------------------------------
 
 ### 2. pygeoapi process plugins
 
-The repository
+Repository:
 
 https://github.com/francescoingv/ingv-pygeoapi-process-plugins
 
-contains the plugins implementing pygeoapi processes.
+Plugins implement the processing logic exposed through pygeoapi.
 
-These plugins receive execution requests through the OGC API interface
-and forward them to an external execution service.
+Responsibilities:
 
-The service is responsible for:
+-   validate input/output parameters
+-   forward execution requests to the execution service
+-   collect execution results
+-   format and return results according to **pygeoapi** infrastructure
 
-- managing input and output parameters
-- invoking the execution service
-- collecting execution results from execution service
-- storing job information and results in a PostgreSQL database
-
----
+------------------------------------------------------------------------
 
 ### 3. Execution service
 
-The execution service is implemented in the repository:
+Repository:
 
 https://github.com/francescoingv/generic-processor-provider
 
-This service receives HTTP requests from the plugins and invokes the
-configured scientific codes through command-line execution.
+Responsibilities:
 
-The service is responsible for:
+-   receive execution requests from plugins
+-   execute configured command‑line programs
+-   manage parameters and runtime environment
+-   return results via HTTP
 
-- invoking the processing code
-- managing execution parameters
-- collecting execution results from processing code
-- returning execution results
-
----
+------------------------------------------------------------------------
 
 ### 4. Scientific processing codes
 
-The scientific processing codes are **not part of this platform
-repository**.
+Scientific codes are **not part of this repository**.
 
-They are invoked by the execution service through the `command_line`
-parameter defined in the service configuration.
+They are executed by the execution service using the configured
+`command_line` parameter.
 
 This design allows:
 
 - independent development of scientific codes
-- flexible deployment of different processing applications
-- reuse of the same execution infrastructure for multiple codes
+- flexible deployment
+- reuse of the same execution infrastructure
 
-The following processing codes are currently supported:
+Currently supported examples:
 
-- **pybox** – scientific processing model executed through the platform
-- **conduit** – scientific processing application executed via the execution service
-- **solwcad** – scientific processing application integrated through the platform
+- **pybox** – scientific processing model to simulate the dispersals
+  of a gravity-driven pyroclastic density currents (PDC)
+  
+  Repository: https://github.com/silviagians/PyBOX-Web
+  DOI: https://doi.org/10.5281/zenodo.18920969
 
----
+- **conduit** – scientific processing model for computing the one-dimensional,
+  steady, isothermal, multiphase and multicomponent flow of magma
+  in volcanic conduits
+
+- **solwcad** – scientific processing model to compute the saturation surface
+  H₂O–CO₂ fluids in silicate melts of arbitrary composition
+
+------------------------------------------------------------------------
+
+## Architecture diagram
+
+```mermaid
+flowchart TD
+
+Client["Client application"] --> API["pygeoapi (OGC API - Processes)"]
+API --> Plugins["pygeoapi process plugins"]
+Plugins --> Provider["generic-processor-provider"]
+Provider --> Code["Scientific processing code (CLI program)"]
+```
+
+------------------------------------------------------------------------
 
 ## Logical workflow
 
-Client
-  │
-  ▼
-pygeoapi
-  │
-  ▼
-pygeoapi plugins
-  │
-  ▼
-generic-processor-provider
-  │
-  ▼
-scientific processing code
-
-Workflow description:
-
-1. A client sends a processing request to **pygeoapi**.
-2. **pygeoapi** forwards the request to the appropriate plugin.
-3. The **pygeoapi plugin** sends the execution request to the external
-   execution service.
-4. The **execution service** invokes the configured scientific code.
-5. The result is returned to the plugin.
+1.  A client sends a processing request to **pygeoapi**.
+2.  **pygeoapi** forwards the request to the appropriate plugin.
+3.  The **pygeoapi plugin** sends the execution request to the
+    **generic processor provider**.
+4.  The provider executes the scientific program.
+5.  Results are returned to the plugin.
 6. **pygeoapi** exposes the result through the OGC API interface.
 
----
+------------------------------------------------------------------------
 
-## Platform repositories
+## Platform components
 
-The platform is composed of the following software repositories:
+| Component | Repository | DOI | Role |
+|-----------|------------|-----|------|
+| processing platform | [ingv-pygeoapi-processing-platform](https://github.com/francescoingv/ingv-pygeoapi-processing-platform) | https://doi.org/10.5281/zenodo.18892848 | platform architecture |
+| pygeoapi process plugins | [ingv-pygeoapi-process-plugins](https://github.com/francescoingv/ingv-pygeoapi-process-plugins) | https://doi.org/10.5281/zenodo.18892819 | OGC API process implementation |
+| generic processor provider | [generic-processor-provider](https://github.com/francescoingv/generic-processor-provider) | https://doi.org/10.5281/zenodo.18892842 | remote execution service |
 
-- **INGV pygeoapi process plugins**
-  https://github.com/francescoingv/ingv-pygeoapi-process-plugins
-  DOI: https://doi.org/10.5281/zenodo.18892819
+------------------------------------------------------------------------
 
-- **Generic processor provider**
-  https://github.com/francescoingv/generic-processor-provider
-  DOI: https://doi.org/10.5281/zenodo.18892842
+## Related projects
+
+This platform builds on:
+
+**pygeoapi**\
+https://github.com/geopython/pygeoapi\
+DOI: https://doi.org/10.5281/zenodo.121585259
+
+------------------------------------------------------------------------
+
+## Related scientific software
+
+Examples of scientific processing codes exposed through this platform:
+
+- **PyBOX-Web**
+  Repository: https://github.com/silviagians/PyBOX-Web
+  DOI: https://doi.org/10.5281/zenodo.18920969
   
----
+------------------------------------------------------------------------
 
 ## Citation
 
@@ -158,7 +202,7 @@ Martinelli, F. (2026).
 *INGV pygeoapi processing platform*.
 DOI: https://doi.org/10.5281/zenodo.18892848
 
----
+------------------------------------------------------------------------
 
 ## License
 
@@ -166,10 +210,18 @@ This project is distributed under the MIT License.
 
 See the LICENSE file for details.
 
----
+------------------------------------------------------------------------
 
 ## Author
 
 Francesco Martinelli
 Istituto Nazionale di Geofisica e Vulcanologia (INGV)
 Pisa, Italy
+
+------------------------------------------------------------------------
+
+## Acknowledgements
+
+Developed at the **Istituto Nazionale di Geofisica e Vulcanologia
+(INGV)**.
+
