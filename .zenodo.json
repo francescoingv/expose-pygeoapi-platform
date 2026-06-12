@@ -1,5 +1,5 @@
 {
-  "title": "INGV pygeoapi processing platform",
+  "title": "EXPOSE (EXecutables for OGC API PrOcesses and Scientific Environments) platform",
   "upload_type": "software",
   "description": "Software platform integrating pygeoapi process plugins and a generic processor provider (execution service) to expose and run scientific command-line processing codes via the OGC API - Processes standard.",
   "creators": [

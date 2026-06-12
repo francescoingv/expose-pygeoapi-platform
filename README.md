@@ -1,4 +1,4 @@
-# INGV pygeoapi processing platform
+# EXPOSE (EXecutables for OGC API PrOcesses and Scientific Environments) platform
 
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18892848.svg)](https://doi.org/10.5281/zenodo.18892848)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
@@ -12,7 +12,8 @@ remote execution architecture.
 
 ## Overview
 
-The **INGV pygeoapi processing platform** is a software architecture
+The **EXPOSE (EXecutables for OGC API PrOcesses and Scientific Environments) platform**
+is a software architecture
 designed to expose command‑line scientific programs as web services
 compliant with the **OGC API - Processes** standard.
 
@@ -168,7 +169,7 @@ Provider --> Code["Scientific processing code (CLI program)"]
 
 | Component | Repository | DOI | Role |
 |-----------|------------|-----|------|
-| processing platform | [ingv-pygeoapi-processing-platform](https://github.com/francescoingv/ingv-pygeoapi-processing-platform) | https://doi.org/10.5281/zenodo.18892848 | platform architecture |
+| processing platform | [expose-pygeoapi-platform](https://github.com/francescoingv/expose-pygeoapi-platform) | https://doi.org/10.5281/zenodo.18892848 | platform architecture |
 | pygeoapi process plugins | [ingv-pygeoapi-process-plugins](https://github.com/francescoingv/ingv-pygeoapi-process-plugins) | https://doi.org/10.5281/zenodo.18892819 | OGC API process implementation |
 | generic processor provider | [generic-processor-provider](https://github.com/francescoingv/generic-processor-provider) | https://doi.org/10.5281/zenodo.18892842 | remote execution service |
 
@@ -199,7 +200,7 @@ Examples of scientific processing codes exposed through this platform:
 If you use this platform in scientific work, please cite it as:
 
 Martinelli, F. (2026).
-*INGV pygeoapi processing platform*.
+*EXPOSE (EXecutables for OGC API PrOcesses and Scientific Environments) platform*.
 DOI: https://doi.org/10.5281/zenodo.18892848
 
 ------------------------------------------------------------------------
