@@ -15,3 +15,7 @@ Sync with Zenodo
 ## [1.0.4] - 2026-03-09
 Bugs in metadata format
 
+## [1.1.1] - 2026-06-24
+Change project name.
+
+

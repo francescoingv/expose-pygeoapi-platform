@@ -82,7 +82,7 @@ https://pygeoapi.io/
 
 Repository:
 
-https://github.com/francescoingv/ingv-pygeoapi-process-plugins
+https://github.com/francescoingv/expose-pygeoapi-plugins
 
 Plugins implement the processing logic exposed through pygeoapi.
 
@@ -170,7 +170,7 @@ Provider --> Code["Scientific processing code (CLI program)"]
 | Component | Repository | DOI | Role |
 |-----------|------------|-----|------|
 | processing platform | [expose-pygeoapi-platform](https://github.com/francescoingv/expose-pygeoapi-platform) | https://doi.org/10.5281/zenodo.18892848 | platform architecture |
-| pygeoapi process plugins | [ingv-pygeoapi-process-plugins](https://github.com/francescoingv/ingv-pygeoapi-process-plugins) | https://doi.org/10.5281/zenodo.18892819 | OGC API process implementation |
+| pygeoapi process plugins | [expose-pygeoapi-plugins](https://github.com/francescoingv/expose-pygeoapi-plugins) | https://doi.org/10.5281/zenodo.18892819 | OGC API process implementation |
 | generic processor provider | [generic-processor-provider](https://github.com/francescoingv/generic-processor-provider) | https://doi.org/10.5281/zenodo.18892842 | remote execution service |
 
 ------------------------------------------------------------------------
