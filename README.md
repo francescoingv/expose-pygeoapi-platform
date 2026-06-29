@@ -177,11 +177,13 @@ Provider --> Code["Scientific processing code (CLI program)"]
 
 ## Related projects
 
-This platform builds on:
+EXPOSE is built upon the pygeoapi framework, which provides the
+implementation of the OGC API standards and the plugin architecture
+used by this platform.
 
 **pygeoapi**\
 https://github.com/geopython/pygeoapi\
-DOI: https://doi.org/10.5281/zenodo.121585259
+DOI: https://doi.org/10.5281/zenodo.5999665
 
 ------------------------------------------------------------------------
 

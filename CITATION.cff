@@ -13,7 +13,7 @@ repository-code: https://github.com/francescoingv/expose-pygeoapi-platform
 url: https://github.com/francescoingv/expose-pygeoapi-platform
 
 abstract: >
-  Software platform integrating pygeoapi process plugins and an external
+  Software platform built on the pygeoapi framework with process plugins and an external
   execution service to expose and run scientific command-line processing
   codes via the OGC API - Processes standard.
 
@@ -25,11 +25,16 @@ keywords:
   - processing services
 
 license: MIT
-version: 1.1.1
-date-released: 2026-06-24
+version: 1.1.2
+date-released: 2026-06-29
 doi: 10.5281/zenodo.18892848
 
 references:
+  - type: software
+    title: pygeoapi
+    doi: 10.5281/zenodo.5999665
+    url: https://github.com/geopython/pygeoapi
+    
   - type: software
     title: EXPOSE plugins
     repository-code: https://github.com/francescoingv/expose-pygeoapi-plugins
